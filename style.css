@@ -9,6 +9,7 @@ body{
 }
 
 .grid-content{
+	width: max-content;
 	display: grid;
 	grid-template: repeat(6, 30px)/ repeat(6, 30px);
 	margin-bottom: 30px;

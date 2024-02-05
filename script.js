@@ -9,7 +9,7 @@ playButton.addEventListener('click', playAudio);
 
 function handleFile(event) {
 	const file = event.target.files[0];
-
+	
 	if (file) {
 		const audio = new Audio(URL.createObjectURL(file));
 		audio.controls = true;
@@ -34,7 +34,6 @@ function playAudio() {
 		canvas.width = gridContainer.clientWidth;
 		canvas.height = gridContainer.clientHeight;
 		const context = canvas.getContext('2d');
-		console.log(context);
 		gridContainer.innerHTML = '';
 		gridContainer.appendChild(canvas);
 
@@ -43,16 +42,18 @@ function playAudio() {
 
 			context.clearRect(0, 0, canvas.width, canvas.height);
 
-			const barWidth = canvas.width / bufferLength;
-			let barHeight, x = 0;
+			const barWidth = canvas.width / 6;
+			const barHeight = canvas.height / 6;
 
-			for (let i = 0; i < bufferLength; i++) {
-				barHeight = dataArray[i] / 2;
+			for (let row = 0; row < 6; row++) {
+				for (let col = 0; col < 6; col++) {
+					const index = Math.floor(col / 6 * bufferLength);
+					const value = dataArray[index];
+					const normalizedValue = value / 256;  // Normalize to a value between 0 and 1
 
-				context.fillStyle = `rgb(0, ${barHeight}, 0)`;
-				context.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
-				x += barWidth + 1;
+					context.fillStyle = `rgb(0, ${Math.floor(normalizedValue * 255)}, 0)`;
+					context.fillRect(col * barWidth, row * barHeight, barWidth, barHeight);
+				}
 			}
 
 			requestAnimationFrame(draw);
