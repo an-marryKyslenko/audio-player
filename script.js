@@ -9,7 +9,7 @@ playButton.addEventListener('click', playAudio);
 
 function handleFile(event) {
 	const file = event.target.files[0];
-	
+
 	if (file) {
 		const audio = new Audio(URL.createObjectURL(file));
 		audio.controls = true;
@@ -47,7 +47,7 @@ function playAudio() {
 
 			for (let row = 0; row < 6; row++) {
 				for (let col = 0; col < 6; col++) {
-					const index = Math.floor(col / 6 * bufferLength);
+					const index = Math.floor((row * 6 + col) / 36 * bufferLength);
 					const value = dataArray[index];
 					const normalizedValue = value / 256;  // Normalize to a value between 0 and 1
 
